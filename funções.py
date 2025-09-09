@@ -1,7 +1,7 @@
 import os
 from classes import *
 
-locadora = Locadora("Locadora Senai")
+locadora = Locadora()
 codigo_item = 0
 codigo_cliente = 0
 
@@ -69,3 +69,4 @@ def listar_itens():
         status = "Disponível" if itens.estado() else "Indisponível"
         print(f"[{itens.idItem()}] {itens.titulo()} - {status}")
     os.system("pause")
+
