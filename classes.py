@@ -1,23 +1,20 @@
-class Locadora:
-    def __init__(self, nome):
-        self.__nome = nome
-        self.__acervo = {}
-        self.__id = 0
-    
-    def addLivro(self, livro):
-        self.__id += 1
-        self.__acervo[self.__id] = livro
-    
-    def listar(self):
-        return self.__acervo
-
-
 class Item:
-    def __init__(self, id, titulo, disponibilidade):
-        self.__id = id
-        self.__titulo = titulo
-        self.__disponibilidade = disponibilidade
+    def __init__(self, idItem, titulo):
+        self._idItem = idItem
+        self._titulo = titulo
+        self._disponivel = True
 
+    def alugar(self):
+        self._disponivel = False
 
-    def getNome(self):
-        return self.__nome
+    def devolver(self):
+        self._disponivel = True
+
+    def idItem (self):
+        return self._idItem
+
+    def titulo (self):
+        return self._titulo
+
+    def estado (self):
+        return self._disponivel
