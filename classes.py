@@ -1,5 +1,5 @@
 class Item:
-    _contador_id = 0 
+    _contador_id = 0  
 
     def __init__(self, titulo):
         Item._contador_id += 1
@@ -52,10 +52,11 @@ class Jogo(Item):
 class Cliente:
     _contador_id = 0 
 
-    def __init__(self, nome):
+    def __init__(self, nome, cpf):
         Cliente._contador_id += 1
         self._idCliente = Cliente._contador_id
         self._nome = nome
+        self._cpf = cpf
         self._itens = []
 
     def alugar(self, item):
@@ -80,6 +81,9 @@ class Cliente:
 
     def nome(self):
         return self._nome
+
+    def cpf(self):
+        return self._cpf
 
 
 class Locadora:

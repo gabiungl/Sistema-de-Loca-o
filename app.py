@@ -36,7 +36,7 @@ while True:
                 print("Opção inválida!")
                 os.system("pause")
 
-    except Exception:
-        print(f"Ocorreu um erro, tente novamenet!")
+    except Exception as e:
+        print(f"Ocorreu um erro, tente novamenet! Erro: {e}")
         os.system("pause")
 
