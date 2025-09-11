@@ -63,3 +63,65 @@ def listar_itens():
         status = "Disponível" if itens.estado() else "Indisponível"
         print(f"[{itens.idItem()}] {itens.titulo()} - {status}")
     os.system("pause")
+
+def alugar_item():
+    os.system("cls")
+    print(" Alugar Item ")
+
+    id_cliente = int(input("ID do Cliente: "))
+    id_item = int(input("ID do Item: "))
+
+    cliente = None
+    item = None
+
+    for clie in locadora.listarClientes():
+        if clie.idCliente() == id_cliente:
+            cliente = clie
+            break
+
+    for ite in locadora.listarItens():
+        if ite.idItem() == id_item:
+            item = ite
+            break
+
+    match (cliente, item, item.estado() if item else None):
+        case (None, _, _):
+            print("Cliente não encontrado!")
+        case (_, None, _):
+            print("Item não encontrado!")
+        case (_, _, False):
+            print(f"{item.titulo()} já está alugado!")
+        case (_, _, True):
+            cliente.alugar(item)
+
+    os.system("pause")
+
+def devolver_item():    
+    os.system("cls")
+    print(" Devolver Item ")
+
+    id_cliente = int(input("ID do Cliente: "))
+    id_item = int(input("ID do Item: "))
+
+    cliente = None
+    item = None
+
+    for clie in locadora.listarClientes():
+        if clie.idCliente() == id_cliente:
+            cliente = clie
+            break
+
+    for ite in locadora.listarItens():
+        if ite.idItem() == id_item:
+            item = ite
+            break
+
+    match (cliente, item):
+        case (None, _):
+            print("Cliente não encontrado!")
+        case (_, None):
+            print("Item não encontrado!")
+        case _:
+            cliente.devolver(item)
+
+    os.system("pause")
