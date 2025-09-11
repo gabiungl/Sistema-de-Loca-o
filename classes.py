@@ -51,8 +51,8 @@ class Jogo(Item):
 
 
 class Cliente:
-    def __init__(self, idCliente, nome):
-        self._idCliente = idCliente
+    def __init__(self, cpf, nome):
+        self._cpf = cpf
         self._nome = nome
         self._itens = []
 
