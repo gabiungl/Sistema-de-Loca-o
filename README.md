@@ -1,6 +1,11 @@
-#Sistema de Locadora de Filmes e Jogos
-Descrição do Projeto
+# 🎬🎮 Sistema de Locadora de Filmes e Jogos
 
-Este projeto consiste em um sistema de locadora capaz de gerenciar clientes, itens disponíveis para locação (filmes e jogos) e controlar empréstimos.
+## Descrição do Projeto
 
-O sistema foi desenvolvido em Python e implementa conceitos de Programação Orientada a Objetos (POO), incluindo herança, encapsulamento e métodos de interação entre classes.
+Este projeto consiste em um **sistema de locadora** capaz de:
+
+- Gerenciar **clientes e itens**  
+- Controlar **itens disponíveis para locação** 
+- Registrar e controlar **empréstimos e devoluções** 
+
+O sistema foi desenvolvido em **Python** e utiliza conceitos de **Programação Orientada a Objetos (POO)**, incluindo herança, classes e interações com o sistema.
