@@ -1,6 +1,9 @@
 class Item:
-    def __init__(self, idItem, titulo):
-        self._idItem = idItem
+    _contador_id = 0 
+
+    def __init__(self, titulo):
+        Item._contador_id += 1
+        self._idItem = Item._contador_id
         self._titulo = titulo
         self._disponivel = True
 
@@ -21,10 +24,8 @@ class Item:
 
 
 class Filme(Item):
-    def __init__(self, id, titulo, genero, duracao):
-        self._idItem = id
-        self._titulo = titulo
-        self._disponivel = True
+    def __init__(self, titulo, genero, duracao):
+        super().__init__(titulo)
         self._genero = genero
         self._duracao = duracao
 
@@ -36,10 +37,8 @@ class Filme(Item):
 
 
 class Jogo(Item):
-    def __init__(self, id, titulo, plataforma, faixaEtaria):
-        self._idItem = id
-        self._titulo = titulo
-        self._disponivel = True
+    def __init__(self, titulo, plataforma, faixaEtaria):
+        super().__init__(titulo)
         self._plataforma = plataforma
         self._faixaEtaria = faixaEtaria
 
@@ -51,8 +50,11 @@ class Jogo(Item):
 
 
 class Cliente:
-    def __init__(self, cpf, nome):
-        self._cpf = cpf
+    _contador_id = 0 
+
+    def __init__(self, nome):
+        Cliente._contador_id += 1
+        self._idCliente = Cliente._contador_id
         self._nome = nome
         self._itens = []
 
@@ -73,6 +75,12 @@ class Cliente:
     def listarItens(self):
         return [item.titulo() for item in self._itens]
 
+    def idCliente(self):
+        return self._idCliente
+
+    def nome(self):
+        return self._nome
+
 
 class Locadora:
     def __init__(self):
@@ -85,7 +93,8 @@ class Locadora:
     def cadastrarItem(self, item):
         self._itens.append(item)
 
+    def listarClientes(self):
+        return self._clientes
+
     def listarItens(self):
-        for item in self._itens:
-            status = "Disponível" if item.estado() else "Alugado"
-            print(f"{item.titulo()} - {status}")
+        return self._itens
