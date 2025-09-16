@@ -130,11 +130,9 @@ def devolver_item():
             cliente = locadora.listarClientes()[cliente_id - 1]
             item = locadora.listarItens()[item_id - 1]
 
-            match item.estado():
+            match item in cliente._itens:
                 case True:
-                    cliente.devolver(item)
-                    print(f"{cliente.nome()} devolveu {item.titulo()}")
-
+                    cliente.devolver(item)  
                 case False:
                     print(f"O cliente {cliente.nome()} não tem esse item alugado.")
 
