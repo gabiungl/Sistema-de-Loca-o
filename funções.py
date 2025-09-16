@@ -14,7 +14,7 @@ def cadastro_cliente():
         os.system("pause")
         return
 
-    cliente = Cliente(nome, cpf)   # CORRIGIDO
+    cliente = Cliente(nome, cpf)   
     locadora.cadastrarCliente(cliente)
     print(f"Cliente [{cliente.idCliente()}] cadastrado com sucesso!")
     os.system("pause")

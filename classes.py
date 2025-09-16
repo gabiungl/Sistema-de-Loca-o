@@ -25,7 +25,11 @@ class Item:
 
 class Filme(Item):
     def __init__(self, titulo, genero, duracao):
-        super().__init__(titulo)
+        Item._contador_id += 1
+        self._idItem = Item._contador_id
+        self._titulo = titulo
+        self._disponivel = True
+
         self._genero = genero
         self._duracao = duracao
 
@@ -38,7 +42,11 @@ class Filme(Item):
 
 class Jogo(Item):
     def __init__(self, titulo, plataforma, faixaEtaria):
-        super().__init__(titulo)
+        Item._contador_id += 1
+        self._idItem = Item._contador_id
+        self._titulo = titulo
+        self._disponivel = True
+
         self._plataforma = plataforma
         self._faixaEtaria = faixaEtaria
 
@@ -70,7 +78,7 @@ class Cliente:
     def devolver(self, item):
         if item in self._itens:
             item.devolver()
-            self._itens.remove(item)
+            self._itens.pop(item)  
             print(f"{self._nome} devolveu {item.titulo()}")
 
     def listarItens(self):
