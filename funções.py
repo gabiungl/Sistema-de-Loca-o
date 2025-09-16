@@ -54,74 +54,93 @@ def listar_clientes():
     for clie in locadora.listarClientes():
         print(f"[{clie.idCliente()}] Nome: {clie.nome()}")
     os.system("pause")
-
+import os
 
 def listar_itens():
     os.system("cls")
     print(" Itens Cadastrados ")
     for itens in locadora.listarItens():
-        status = "Disponível" if itens.estado() else "Indisponível"
+        match itens.estado():
+            case True:
+                status = "Disponível"
+            case False:
+                status = "Indisponível"
         print(f"[{itens.idItem()}] {itens.titulo()} - {status}")
     os.system("pause")
 
 def alugar_item():
-    os.system("cls")
-    print(" Alugar Item ")
+    while True:
+        try:
+            print("-Alugar-")
+            print("\nClientes cadastrados:")
+            count = 1
+            for cliente in locadora.listarClientes():
+                print(f"ID:{count} \nNome: {cliente.nome()} \nCPF: {cliente.cpf()}")
+                count += 1
 
-    id_cliente = int(input("ID do Cliente: "))
-    id_item = int(input("ID do Item: "))
+            print("\nItens disponíveis:")
+            count = 1
+            for item in locadora.listarItens():
+                status = "Disponível" if item.estado() else "Alugado"
+                print(f"ID:{count} \nTítulo: {item.titulo()} \nStatus: {status}")
+                count += 1
 
-    cliente = None
-    item = None
+            cliente_id = int(input("\nDigite o ID do cliente: "))
+            item_id = int(input("Digite o ID do item: "))
 
-    for clie in locadora.listarClientes():
-        if clie.idCliente() == id_cliente:
-            cliente = clie
+            cliente = locadora.listarClientes()[cliente_id - 1]
+            item = locadora.listarItens()[item_id - 1]
+
+            match item.estado():
+                case True:
+                    cliente.alugar(item)
+                    print(f"{cliente.nome()} alugou {item.titulo()}")
+                case False:
+                    print("Esse item já está alugado")
+
+
+            os.system("pause")
             break
 
-    for ite in locadora.listarItens():
-        if ite.idItem() == id_item:
-            item = ite
+        except Exception as e:
+            print(f"Ocorreu um erro inesperado: {e}")
+            os.system("pause")
+  
+
+def devolver_item():
+    while True:
+        try:
+            print("-Devolver-")
+            print("Clientes cadastrados:")
+            count = 1
+            for cliente in locadora.listarClientes():
+                print(f"ID:{count} \nNome: {cliente.nome()}")
+                count += 1
+
+            print("\nItens:")
+            count = 1
+            for item in locadora.listarItens():
+                status = "Disponível" if item.estado() else "Alugado"
+                print(f"ID:{count} \nTítulo: {item.titulo()} \nStatus: {status}")
+                count += 1
+
+            cliente_id = int(input("\nDigite o ID do cliente: "))
+            item_id = int(input("Digite o ID do item: "))
+
+            cliente = locadora.listarClientes()[cliente_id - 1]
+            item = locadora.listarItens()[item_id - 1]
+
+            match item.estado():
+                case True:
+                    cliente.devolver(item)
+                    print(f"{cliente.nome()} devolveu {item.titulo()}")
+
+                case False:
+                    print(f"O cliente {cliente.nome()} não tem esse item alugado.")
+
+            os.system("pause")
             break
 
-    match (cliente, item, item.estado() if item else None):
-        case (None, _, _):
-            print("Cliente não encontrado!")
-        case (_, None, _):
-            print("Item não encontrado!")
-        case (_, _, False):
-            print(f"{item.titulo()} já está alugado!")
-        case (_, _, True):
-            cliente.alugar(item)
-
-    os.system("pause")
-
-def devolver_item():    
-    os.system("cls")
-    print(" Devolver Item ")
-
-    id_cliente = int(input("ID do Cliente: "))
-    id_item = int(input("ID do Item: "))
-
-    cliente = None
-    item = None
-
-    for clie in locadora.listarClientes():
-        if clie.idCliente() == id_cliente:
-            cliente = clie
-            break
-
-    for ite in locadora.listarItens():
-        if ite.idItem() == id_item:
-            item = ite
-            break
-
-    match (cliente, item):
-        case (None, _):
-            print("Cliente não encontrado!")
-        case (_, None):
-            print("Item não encontrado!")
-        case _:
-            cliente.devolver(item)
-
-    os.system("pause")
+        except Exception as e:
+            print(f"Ocorreu um erro inesperado: {e}")
+            os.system("pause")

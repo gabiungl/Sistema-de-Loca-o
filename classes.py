@@ -68,18 +68,24 @@ class Cliente:
         self._itens = []
 
     def alugar(self, item):
-        if item.estado():
-            item.alugar()
-            self._itens.append(item)
-            print(f"{self._nome} alugou {item.titulo()}")
-        else:
-            print(f"{item.titulo()} não está disponível")
+        match item.estado():
+            case True:
+                item.alugar()
+                self._itens.append(item)
+                print(f"{self._nome} alugou {item.titulo()}")
+            case False:
+                print(f"{item.titulo()} não está disponível")
+
 
     def devolver(self, item):
-        if item in self._itens:
-            item.devolver()
-            self._itens.remove(item)  
-            print(f"{self._nome} devolveu {item.titulo()}")
+        match item in self._itens:
+            case True:
+                item.devolver()
+                self._itens.remove(item)
+                print(f"{self._nome} devolveu {item.titulo()}")
+            case False:
+                print(f"{self._nome} não possui {item.titulo()} para devolver")
+
 
     def listarItens(self):
         return [item.titulo() for item in self._itens]

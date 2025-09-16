@@ -17,7 +17,7 @@ while True:
 
         match escolha:
             case 1:
-                cadastro_cliente()
+                cadastro_cliente()   
             case 2:
                 cadastro_item()
             case 3:
