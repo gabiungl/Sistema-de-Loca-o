@@ -78,7 +78,7 @@ class Cliente:
     def devolver(self, item):
         if item in self._itens:
             item.devolver()
-            self._itens.pop(item)  
+            self._itens.remove(item)  
             print(f"{self._nome} devolveu {item.titulo()}")
 
     def listarItens(self):
