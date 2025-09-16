@@ -21,6 +21,7 @@ while True:
             case 2:
                 cadastro_item()
             case 3:
+                
                 listar_clientes()
             case 4:
                 listar_itens()

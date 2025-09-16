@@ -13,10 +13,9 @@ def cadastro_cliente():
         print("Erro na entrada de dados!")
         os.system("pause")
         return
-
-    cliente = Cliente(nome, cpf)   
+    cliente = Cliente(nome, cpf)
     locadora.cadastrarCliente(cliente)
-    print(f"Cliente [{cliente.idCliente()}] cadastrado com sucesso!")
+    print(f"Cliente [{cliente.getId()}] cadastrado com sucesso!")  
     os.system("pause")
 
 def cadastro_item():
@@ -47,24 +46,19 @@ def cadastro_item():
         print(f"Erro: {e}")
     os.system("pause")
 
-
 def listar_clientes():
     os.system("cls")
     print(" Clientes Cadastrados")
     for clie in locadora.listarClientes():
-        print(f"[{clie.idCliente()}] Nome: {clie.nome()}")
+        print(f"[{clie.getId()}] Nome: {clie.getNome()}")  # getId() e getNome() corrigidos
     os.system("pause")
 
 def listar_itens():
     os.system("cls")
     print(" Itens Cadastrados ")
     for itens in locadora.listarItens():
-        match itens.estado():
-            case True:
-                status = "Disponível"
-            case False:
-                status = "Indisponível"
-        print(f"[{itens.idItem()}] {itens.titulo()} - {status}")
+        status = "Disponível" if itens.getDisponivel() else "Indisponível"  # getDisponivel()
+        print(f"[{itens.getCodigo()}] {itens.getTitulo()} - {status}")  # getCodigo() e getTitulo()
     os.system("pause")
 
 def alugar_item():
@@ -74,14 +68,14 @@ def alugar_item():
             print("\nClientes cadastrados:")
             count = 1
             for cliente in locadora.listarClientes():
-                print(f"ID:{count} \nNome: {cliente.nome()} \nCPF: {cliente.cpf()}")
+                print(f"ID:{count} \nNome: {cliente.getNome()} \nCPF: {cliente.getCpf()}") 
                 count += 1
 
             print("\nItens disponíveis:")
             count = 1
             for item in locadora.listarItens():
-                status = "Disponível" if item.estado() else "Alugado"
-                print(f"ID:{count} \nTítulo: {item.titulo()} \nStatus: {status}")
+                status = "Disponível" if item.getDisponivel() else "Alugado"
+                print(f"ID:{count} \nTítulo: {item.getTitulo()} \nStatus: {status}")
                 count += 1
 
             cliente_id = int(input("\nDigite o ID do cliente: "))
@@ -90,21 +84,15 @@ def alugar_item():
             cliente = locadora.listarClientes()[cliente_id - 1]
             item = locadora.listarItens()[item_id - 1]
 
-            match item.estado():
-                case True:
-                    cliente.alugar(item)
-                    print(f"{cliente.nome()} alugou {item.titulo()}")
-                case False:
-                    print("Esse item já está alugado")
-
-
+            if item.getDisponivel():
+                cliente.locar(item) 
+            else:
+                print("Esse item já está alugado")
             os.system("pause")
             break
-
         except Exception as e:
             print(f"Ocorreu um erro inesperado: {e}")
             os.system("pause")
-  
 
 def devolver_item():
     while True:
@@ -113,14 +101,14 @@ def devolver_item():
             print("Clientes cadastrados:")
             count = 1
             for cliente in locadora.listarClientes():
-                print(f"ID:{count} \nNome: {cliente.nome()}")
+                print(f"ID:{count} \nNome: {cliente.getNome()}") 
                 count += 1
 
             print("\nItens:")
             count = 1
             for item in locadora.listarItens():
-                status = "Disponível" if item.estado() else "Alugado"
-                print(f"ID:{count} \nTítulo: {item.titulo()} \nStatus: {status}")
+                status = "Disponível" if item.getDisponivel() else "Alugado"  
+                print(f"ID:{count} \nTítulo: {item.getTitulo()} \nStatus: {status}")
                 count += 1
 
             cliente_id = int(input("\nDigite o ID do cliente: "))
@@ -129,15 +117,12 @@ def devolver_item():
             cliente = locadora.listarClientes()[cliente_id - 1]
             item = locadora.listarItens()[item_id - 1]
 
-            match item in cliente._itens:
-                case True:
-                    cliente.devolver(item)  
-                case False:
-                    print(f"O cliente {cliente.nome()} não tem esse item alugado.")
-
+            if item in cliente._Cliente__itens_locados:  
+                cliente.devolver(item)
+            else:
+                print(f"O cliente {cliente.getNome()} não tem esse item alugado.")
             os.system("pause")
             break
-
         except Exception as e:
             print(f"Ocorreu um erro inesperado: {e}")
             os.system("pause")
