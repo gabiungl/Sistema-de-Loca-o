@@ -1,60 +1,71 @@
+class Locadora:
+    def __init__(self):
+        self.__clientes = []
+        self.__itens = []
+    
+    def cadastrarCliente(self, cliente):
+        self.__clientes.append(cliente)
+
+    def cadastrarItem(self, item):
+        self.__itens.append(item)
+    
+    def listarClientes(self):
+        return self.__clientes
+
+    def listarItens(self):
+        return self.__itens
+
+loc = Locadora()
+
 class Item:
     _contador_id = 0  
 
     def __init__(self, titulo):
         Item._contador_id += 1
-        self._idItem = Item._contador_id
-        self._titulo = titulo
-        self._disponivel = True
-
+        self.__codigo = Item._contador_id
+        self.__titulo = titulo
+        self.__disponivel = True
+    
     def alugar(self):
-        self._disponivel = False
+        self.__disponivel = False
 
     def devolver(self):
-        self._disponivel = True
+        self.__disponivel = True
 
-    def idItem(self):
-        return self._idItem
-
-    def titulo(self):
-        return self._titulo
-
-    def estado(self):
-        return self._disponivel
-
-
-class Filme(Item):
-    def __init__(self, titulo, genero, duracao):
-        Item._contador_id += 1
-        self._idItem = Item._contador_id
-        self._titulo = titulo
-        self._disponivel = True
-
-        self._genero = genero
-        self._duracao = duracao
-
-    def genero(self):
-        return self._genero
-
-    def duracao(self):
-        return self._duracao
+    def getCodigo(self):
+        return self.__codigo
+    
+    def getTitulo(self):
+        return self.__titulo
+    
+    def getDisponivel(self):
+        return self.__disponivel
 
 
 class Jogo(Item):
-    def __init__(self, titulo, plataforma, faixaEtaria):
-        Item._contador_id += 1
-        self._idItem = Item._contador_id
-        self._titulo = titulo
-        self._disponivel = True
+    def __init__(self, titulo, plataforma, faixa_etaria):
+        super().__init__(titulo=titulo)
+        self.__plataforma = plataforma
+        self.__faixa_etaria = faixa_etaria
 
-        self._plataforma = plataforma
-        self._faixaEtaria = faixaEtaria
-
-    def plataforma(self):
-        return self._plataforma
-
-    def faixaEtaria(self):
-        return self._faixaEtaria
+    def getPlataforma(self):
+        return self.__plataforma
+    
+    def getFaixa(self):
+        return self.__faixa_etaria
+    
+    
+class Filme(Item):
+    def __init__(self, titulo, genero, duracao):
+        super().__init__(titulo=titulo)
+        self.__genero = genero
+        self.__duracao = duracao
+    
+    def getGenero(self):
+        return self.__genero
+    
+    def getDuracao(self):
+        return self.__duracao
 
 
 class Cliente:
@@ -62,57 +73,35 @@ class Cliente:
 
     def __init__(self, nome, cpf):
         Cliente._contador_id += 1
-        self._idCliente = Cliente._contador_id
-        self._nome = nome
-        self._cpf = cpf
-        self._itens = []
+        self.__id = Cliente._contador_id
+        self.__nome = nome
+        self.__cpf = cpf
+        self.__itens_locados = []
 
-    def alugar(self, item):
-        match item.estado():
-            case True:
-                item.alugar()
-                self._itens.append(item)
-                print(f"{self._nome} alugou {item.titulo()}")
-            case False:
-                print(f"{item.titulo()} não está disponível")
-
+    def locar(self, item):
+        if item.getDisponivel():
+            item.alugar()
+            self.__itens_locados.append(item)
+            print(f"{self.__nome} alugou {item.getTitulo()}")
+        else:
+            print(f"{item.getTitulo()} não está disponível.")
 
     def devolver(self, item):
-        match item in self._itens:
-            case True:
-                item.devolver()
-                self._itens.remove(item)
-                print(f"{self._nome} devolveu {item.titulo()}")
-            case False:
-                print(f"{self._nome} não possui {item.titulo()} para devolver")
-
+        if item in self.__itens_locados:
+            item.devolver()
+            self.__itens_locados.remove(item)
+            print(f"{self.__nome} devolveu {item.getTitulo()}")
+        else:
+            print(f"{self.__nome} não possui {item.getTitulo()} para devolver.")
 
     def listarItens(self):
-        return [item.titulo() for item in self._itens]
+        return [item.getTitulo() for item in self.__itens_locados]
 
-    def idCliente(self):
-        return self._idCliente
+    def getId(self):
+        return self.__id
 
-    def nome(self):
-        return self._nome
-
-    def cpf(self):
-        return self._cpf
-
-
-class Locadora:
-    def __init__(self):
-        self._clientes = []
-        self._itens = []
-
-    def cadastrarCliente(self, cliente):
-        self._clientes.append(cliente)
-
-    def cadastrarItem(self, item):
-        self._itens.append(item)
-
-    def listarClientes(self):
-        return self._clientes
-
-    def listarItens(self):
-        return self._itens
+    def getNome(self):
+        return self.__nome
+    
+    def getCpf(self):
+        return self.__cpf

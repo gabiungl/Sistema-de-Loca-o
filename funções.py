@@ -54,7 +54,6 @@ def listar_clientes():
     for clie in locadora.listarClientes():
         print(f"[{clie.idCliente()}] Nome: {clie.nome()}")
     os.system("pause")
-import os
 
 def listar_itens():
     os.system("cls")
